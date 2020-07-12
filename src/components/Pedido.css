@@ -1,0 +1,13 @@
+.pedido {
+    width: 249px;
+    height: 500px;
+    background: red;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+}
+@media (max-width: 991px){
+    .pedido{
+        display: none;
+    }
+}

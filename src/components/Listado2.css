@@ -1,0 +1,296 @@
+:root {
+    --primary:#2175f5;
+}
+.contenedorLista {
+    width: 100vw;
+    height: 100vw;
+}
+.lista {
+    width: 100vw;
+    height: 100vh;
+    padding: 57px 269px 0 142px;
+    display: flex;
+    justify-content: center;
+    overflow-y: scroll;
+}
+.cardPlato{
+   /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;*/
+    width: 500px;
+    height: 100vh;
+    margin-top: 10px;
+    margin-bottom: 59px;
+    box-shadow: 0 0 35px 1px rgba(0, 0, 0, 0.2);
+}
+.platoImagen {
+    position: relative;
+    background: white;
+    /*width: 50%;*/
+    width: 100%;
+    padding: 10px;
+    
+    box-shadow: -15px 0 35px rgba(0, 0, 0, 0.1),
+    0 -15px 35px rgba(0, 0, 0, 0.1),
+    0 15px 35px rgba(0, 0, 0, 0.1);
+    /*transition: .5s;*/
+}
+.platoImagen img{
+  width: 480px;
+}
+.info{
+    width: 100%;
+    background-color: #fff;
+    /*z-index: 1;*/
+    padding: 35px 40px;
+    box-shadow: 15px 0 35px rgba(0, 0, 0, 0.1),
+    0 -15px 35px rgba(0, 0, 0, 0.1),
+    0 15px 35px rgba(0, 0, 0, 0.1);
+}
+.platoName{
+    padding: 0 0 10px 0;
+}
+.platoName div {
+    display: flex;
+    align-items: center;
+}
+.platoName div .big{
+    margin-right: 10px;
+    font-size: 2rem;
+    color: #333;
+    line-height: 1;
+}
+.platoName div .new{
+    background-color: var(--primary);
+    text-transform: uppercase;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 5px;
+    transition: .5s;
+}
+.platoName .small{
+    font-weight: 500;
+    color: #444;
+    margin-top: 3px;
+    text-transform: capitalize;
+}
+.shoeName, .description, .size-container{
+    border-bottom: 1px solid #dadada;
+}
+.description{
+    padding: 10px 0;
+}
+.title{
+    color: #3a3a3a;
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+.text{
+    color: #555;
+    font-size: 17px;
+}
+.size-container{
+    padding: 10px 0;
+    margin-bottom: 10px;
+}
+.sizes{
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+}
+.size{
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    background-color: #eee;
+    margin: 0 10px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: .3s;
+}
+.size.active{
+    background-color: var(--primary);
+    color: #fff;
+    transition: .5s;
+}
+.buy-price{
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.price{
+    color: #333;
+    display: flex;
+    align-items: flex-start;
+}
+.price h1{
+    font-size: 2.1rem;
+    font-weight: 600;
+    line-height: 1;
+}
+.price i{
+    font-size: 1.4rem;
+    margin-right: 1px;
+}
+.buy{
+    padding: .7rem 1rem;
+    background-color: var(--primary);
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: .5s;
+}
+.buy:hover{
+    transform: scale(1.1);
+}
+.buy i{
+    margin-right: 2px;
+}
+
+/*@media (max-width: 991px){
+    .lista{
+        padding: 57px 0 34px 0;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1198px){
+    .lista{
+        padding: 57px 269px 0 122px;
+    }
+}
+
+@media (max-width: 500px){
+    .platoImagen img{
+        width: 100%;
+    }
+    .cardPlato {
+        width: 100%;
+        margin-bottom: -112px;
+    }
+}
+@media (min-width: 361px) and (max-width: 499px){
+    .cardPlato {
+        margin-bottom: 90px;
+    }
+}
+
+@media (max-width: 360px){
+    .cardPlato {
+        margin-bottom: 100px;
+    }
+}*/
+
+@media (max-width: 320px){
+    .lista{
+      /*  padding: 57px 0 34px 0;*/
+      padding-top: 57px;
+      padding-right: 0;
+      padding-bottom: 284px;
+      padding-left: 0;
+    }
+    .platoImagen img{
+        width: 100%;
+    }
+    .cardPlato {
+        width: 95%;
+    }
+}
+@media(min-width:321px) and (max-width:360px){
+    .platoImagen img{
+        width: 100%;
+    }
+    .cardPlato {
+        width: 95%;
+    }
+    .lista{
+        /*  padding: 57px 0 34px 0;*/
+        padding-top: 57px;
+        padding-right: 0;
+        padding-bottom: 172px;
+        padding-left: 0;
+      }
+}
+@media(min-width:361px) and (max-width:375px){
+    .platoImagen img{
+        width: 100%;
+    }
+    .cardPlato {
+        width: 95%;
+    }
+    .lista{
+        /*  padding: 57px 0 34px 0;*/
+        padding-top: 57px;
+        padding-right: 0;
+        padding-bottom: 155px;
+        padding-left: 0;
+      }
+}
+@media(min-width:321px) and (max-width:375px) and (height:812px){
+    .platoImagen img{
+        width: 100%;
+    }
+    .cardPlato {
+        width: 95%;
+    }
+    .lista{
+        /*  padding: 57px 0 34px 0;*/
+        padding-top: 57px;
+        padding-right: 0;
+        padding-bottom: 10px;
+        padding-left: 0;
+      }
+}
+@media(min-width:376px) and (max-width:767px){
+    .platoImagen img{
+        width: 100%;
+    }
+    .cardPlato {
+        width: 95%;
+    }
+    .lista{
+        /*  padding: 57px 0 34px 0;*/
+        padding-top: 57px;
+        padding-right: 0;
+        padding-bottom: 108px;
+        padding-left: 0;
+      }
+}
+@media(min-width:376px) and (max-width:767px) and (height:823px){
+    .platoImagen img{
+        width: 100%;
+    }
+    .cardPlato {
+        width: 95%;
+    }
+    .lista{
+        /*  padding: 57px 0 34px 0;*/
+        padding-top: 57px;
+        padding-right: 0;
+        padding-bottom: 17px;
+        padding-left: 0;
+      }
+}
+@media(min-width:768px) and (max-width:991px){
+    .platoImagen img{
+        width: 100%;
+    }
+    .cardPlato {
+        width: 95%;
+    }
+    .lista{
+        /*  padding: 57px 0 34px 0;*/
+        padding-top: 57px;
+        padding-right: 0;
+        padding-bottom: 17px;
+        padding-left: 0;
+      }
+}
