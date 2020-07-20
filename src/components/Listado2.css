@@ -1,48 +1,98 @@
 :root {
-    --primary:#2175f5;
+  --primary: #2175f5;
 }
-.contenedorLista {
-    width: 100vw;
-    height: 100vw;
+.containerPlato {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  /*background: gray;*/
+  transition: 1s;
 }
-.lista {
-    width: 100vw;
-    height: 100vh;
-    padding: 57px 269px 0 142px;
-    display: flex;
-    justify-content: center;
-    overflow-y: scroll;
+.rowPlato {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
 }
-.cardPlato{
-   /* display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;*/
-    width: 500px;
-    height: 100vh;
-    margin-top: 10px;
-    margin-bottom: 59px;
-    box-shadow: 0 0 35px 1px rgba(0, 0, 0, 0.2);
+.colPlato {
+  flex: 0 0 100%;
+  max-width: 100%;
+  /*background: red;*/
+  margin-bottom: 1.5rem !important;
+}
+.cardPlato {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /*width: 100%;*/
+  height: 100%;
+  margin: 10px;  
+  /*margin-bottom: 59px;*/
+  box-shadow: 0 0 35px 1px rgba(0, 0, 0, 0.2);
+}
+.caja-imagen {
+  width: 100%;
+}
+.caja-imagen img {
+  width: 100%;
+  height: 100%;
+  /*border: 3px solid red;*/
+  object-fit: contain;
 }
 .platoImagen {
-    position: relative;
-    background: white;
-    /*width: 50%;*/
-    width: 100%;
-    padding: 10px;
-    
-    box-shadow: -15px 0 35px rgba(0, 0, 0, 0.1),
-    0 -15px 35px rgba(0, 0, 0, 0.1),
+  position: relative;
+  background: white;
+  width: 50%;
+  width: 100%;
+  padding: 10px;
+
+  box-shadow: -15px 0 35px rgba(0, 0, 0, 0.1), 0 -15px 35px rgba(0, 0, 0, 0.1),
     0 15px 35px rgba(0, 0, 0, 0.1);
-    /*transition: .5s;*/
+  transition: 0.5s;
 }
-.platoImagen img{
-  width: 480px;
+@media (min-width: 576px) {
+  .containerPlato {
+    max-width: 540px;
+  }
+  .colPlato {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
 }
+
+@media (min-width: 768px) {
+  .containerPlato {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .containerPlato {
+    max-width: 960px;
+  }
+  .colPlato {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .containerPlato {
+    max-width: 1140px;
+  }
+  .colPlato {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+}
+
 .info{
     width: 100%;
     background-color: #fff;
-    /*z-index: 1;*/
+    z-index: 1;
     padding: 35px 40px;
     box-shadow: 15px 0 35px rgba(0, 0, 0, 0.1),
     0 -15px 35px rgba(0, 0, 0, 0.1),
@@ -187,11 +237,11 @@
     .cardPlato {
         margin-bottom: 100px;
     }
-}*/
+}
 
 @media (max-width: 320px){
     .lista{
-      /*  padding: 57px 0 34px 0;*/
+        padding: 57px 0 34px 0;
       padding-top: 57px;
       padding-right: 0;
       padding-bottom: 284px;
@@ -212,7 +262,7 @@
         width: 95%;
     }
     .lista{
-        /*  padding: 57px 0 34px 0;*/
+          padding: 57px 0 34px 0;
         padding-top: 57px;
         padding-right: 0;
         padding-bottom: 172px;
@@ -227,7 +277,7 @@
         width: 95%;
     }
     .lista{
-        /*  padding: 57px 0 34px 0;*/
+          padding: 57px 0 34px 0;
         padding-top: 57px;
         padding-right: 0;
         padding-bottom: 155px;
@@ -242,7 +292,7 @@
         width: 95%;
     }
     .lista{
-        /*  padding: 57px 0 34px 0;*/
+          padding: 57px 0 34px 0;
         padding-top: 57px;
         padding-right: 0;
         padding-bottom: 10px;
@@ -257,7 +307,7 @@
         width: 95%;
     }
     .lista{
-        /*  padding: 57px 0 34px 0;*/
+          padding: 57px 0 34px 0;
         padding-top: 57px;
         padding-right: 0;
         padding-bottom: 108px;
@@ -272,7 +322,7 @@
         width: 95%;
     }
     .lista{
-        /*  padding: 57px 0 34px 0;*/
+          padding: 57px 0 34px 0;
         padding-top: 57px;
         padding-right: 0;
         padding-bottom: 17px;
@@ -287,10 +337,11 @@
         width: 95%;
     }
     .lista{
-        /*  padding: 57px 0 34px 0;*/
+          padding: 57px 0 34px 0;
         padding-top: 57px;
         padding-right: 0;
         padding-bottom: 17px;
         padding-left: 0;
       }
 }
+*/

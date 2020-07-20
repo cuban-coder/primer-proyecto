@@ -1,5 +1,5 @@
-.alineacion {
-  position: absolute;
+/*.alineacion {
+  position: fixed;  
   width: 100vw;
-  z-index: 1;
-}
+  z-index: 1000;
+}*/

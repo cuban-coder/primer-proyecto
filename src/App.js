@@ -14,14 +14,8 @@ import Menu from './components/Menu'
 function App() {
   return (
     <Router>
-      
         <Navigation />
-        <div className='route-flex'>
-          <div className='box1'>
             <Route path="/" exact component={Menu} />
-          </div>
-        </div>
-
     </Router>
   );
 }
