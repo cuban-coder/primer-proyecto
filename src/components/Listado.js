@@ -6,38 +6,18 @@ import plat2 from "../img/imagen7.jpg";
 
 import axios from "axios";
 
-import "./Listado2.css";
-import cards from "./sample/cards.json";
+import "./Listado.css";
+
+
+
 
 export default class Listado extends Component {
-  state = {
-    opciones: [1, 2, 3, 4],
+  state = {  
     platos: [],
-    active: 0,
 
-    cards: [
-      {
-        id: 1,
-        active: 4,
-        name: "active",
-      },
-      {
-        id: 2,
-        active: 2,
-        name: "active",
-      },
-      {
-        id: 3,
-        active: 1,
-        name: "active",
-      },
-      {
-        id: 4,
-        active: 4,
-        name: "active",
-      },
-    ],
   };
+
+
   async componentDidMount() {
     await this.getPlatos();
   }
@@ -68,68 +48,69 @@ export default class Listado extends Component {
   };
 
   render() {
-    const platos = this.state.platos;
+    const cards = [1,2,3,4]
 
     return (
       <div>
         <div className="containerPlato">
           <div className="rowPlato">
-            {this.state.platos.map((plato) => (
-              <div className="colPlato"  key={plato.id}>
-                <div className="cardPlato">
-                  <div className="caja-imagen">
-                    <img src={plato.image} alt=""/>
-                  </div>
-                  <div className="info">
-                    <div className="platoName">
-                      <div>
-                        <h1 className="big"> {plato.nombre} </h1>
-                        <span className="new">new</span>
-                      </div>
-                      <h3 className="small">
-                        algo sobre el plato que quiearas decir
-                      </h3>
-                    </div>
-                    <div className="description">
-                      <h3 className="title">Product info</h3>
-                      <p className="text">
-                        {plato.descripcion}
-                      </p>
-                    </div>
-                    <div className="size-container">
-                      <h3 className="title">cantidad</h3>
-                      <div className="sizes">
-                        {this.state.cards.map((c) => (
-                          <span
-                            className={
-                              "size " + (plato.active === c.id ? "active" : "")
-                            }
-                            key={c.id}
-                            onClick={() => this.handleClick2(plato.id, c.id)}
-                          >
-                            {c.id}
-                          </span>
-                        ))}
-                        <span className="size">+</span>
-                      </div>
-                    </div>
-                    <div className="buy-price">
-                      <Link to="#" className="buy">
-                        <i className="fas fa-shopping-cart"></i>Add to card
-                      </Link>
-                      <div className="price">
-                        <i className="fas fa-dollar-sign"></i>
-                        <h1>189.99</h1>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+          {this.state.platos.filter(plato => plato.categoria === "plato fuerte").map(plato => (
+             <div className="colPlato"  key={plato.id}>
+             <div className="cardPlato">
+               <div className="caja-imagen">
+                 <img src={plato.image} alt=""/>
+               </div>
+               <div className="info">
+                 <div className="platoName">
+                   <div>
+                     <h1 className="big"> {plato.nombre} </h1>
+                     <span className="new">new</span>
+                   </div>
+                   <h3 className="small">
+                     algo sobre el plato que quiearas decir
+                   </h3>
+                 </div>
+                 <div className="description">
+                   <h3 className="title">Product info</h3>
+                   <p className="text">
+                     {plato.descripcion}
+                   </p>
+                 </div>
+                 <div className="size-container">
+                   <h3 className="title">cantidad</h3>
+                   <div className="sizes">
+                  
 
+                   {cards.map((c) => (
+                       <span
+                         className={
+                           "size " + (plato.active === c ? "active" : "")
+                         }
+                         key={c}
+                         onClick={() => this.handleClick2(plato.id, c)}
+                       >
+                         {c}
+                       </span>
+                     ))}
+              
+                     <span className="size">+</span>
+                   </div>
+                 </div>
+                 <div className="buy-price">
+                   <Link to="#" className="buy">
+                     <i className="fas fa-shopping-cart"></i>Agregar2
+                   </Link>
+                   <div className="price">
+                     <i className="fas fa-dollar-sign"></i>
+                     <h1>{plato.precio}</h1>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+          ))}
 
-
-
+          
           </div>
         </div>
       </div>

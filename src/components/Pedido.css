@@ -1,13 +1,42 @@
-/*.pedido {
-    width: 249px;
-    height: 500px;
-    background: red;
-    position: absolute;
+.pedido {
+   
+    height: 64%;
+    background: rgba(38, 76, 114, 0.815);
+    position: fixed;
     top: 60px;
-    right: 20px;
+    right: 1px;
+    border-radius: 5px;
+    z-index: 1000;
+    padding-top: 51px;
+    /*padding-bottom: 50px;*/
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  
 }
 @media (max-width: 991px){
     .pedido{
         display: none;
     }
-}*/
+}
+.comprar {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+.total {
+    position: absolute;
+    width: 100%;
+    background-color: rgb(219, 93, 93);
+    bottom: 33px;
+    border-radius: 2px;
+    text-align: center;
+    color: rgb(245, 238, 238);
+}
+.pedidoContenedor{
+    overflow-y: scroll ;
+}
+.h6Pedido {
+    background: red;
+}
