@@ -14,7 +14,8 @@ function Menu() {
   const [cardSelected, setCardSelected] = useState("plato fuerte");
   const [agregados, setAgregados] = useState([]);
   const [hidden, setHidden] = useState(true);
-  const [total, setTotal] = useState(0)
+  const [total, setTotal] = useState(0);
+ 
 
   useEffect(() => {
     getCategoria();
@@ -54,10 +55,7 @@ function Menu() {
      setAgregados ([ ...agregados, plato]);
   };
 
-  const mostrar = () => {
-    alert("Se ha agregado su pedido satisfactoriamente")
-   
-  };
+  
 
   const mostrarMas = () => {
     if (!hidden) {
@@ -84,7 +82,7 @@ function Menu() {
   const getTotal = async () => {
     var pT= 0;
     for (let i = 0; i < agregados.length; i++) {
-     pT = (agregados[i].precio* agregados[i].active)+pT;
+     pT = (agregados[i].precio * agregados[i].active)+pT;
     }
     setTotal(parseFloat(pT).toFixed(2))
   }
@@ -96,6 +94,7 @@ function Menu() {
           nombre={a.nombre}
           cantidad={a.active}
           precio={a.precio}
+          showactive = {a.showactive}
           id={a.id}
           key={i}
           indice={i}
@@ -109,9 +108,40 @@ function Menu() {
      )
    }
 
+   const aumentarCantidad = async (idCard, id) => {
+    await setPlatos(
+      platos.map((plato) =>
+        plato.id === idCard ? { ...plato, active: id+1 } : plato
+      )
+    );   
+   }
+   const disminuirCantidad = async (idCard, id) => {
+    await setPlatos(
+      platos.map((plato) =>
+        plato.id === idCard ? { ...plato, active: id-1 } : plato
+      )
+    );
+   }
 
-  const cards = [1, 2, 3, 4];
+  
 
+  const insertarPedido = async () => {
+    await agregados.map(agregado => 
+       axios.post("http://localhost:4000/temp", {
+       id_plato: agregado.id,
+       cantidad: agregado.active,
+       nombre_cliente: "Margarita",
+       cancelado: false,
+       done: false
+      }
+    )
+      );
+    setAgregados([]);
+  }
+
+
+  const cards = [1, 2, 3,4];
+  const cardOne = 5;
   return (
     <div>
       <div className="menu-padre">
@@ -134,7 +164,14 @@ function Menu() {
                   key={plato.id}
                   handleClick={handleClick}
                   cards={cards}
+                  cardOne = {cardOne}
                   agregarPedido={agregarPedido}
+                  aumentarCantidad= {aumentarCantidad}
+                  mostrarMas = {mostrarMas}
+                  
+                  disminuirCantidad = {disminuirCantidad}
+
+
                 />
               ))}
           </div>
@@ -163,7 +200,7 @@ function Menu() {
 
             <Total 
             total= {total}
-            mostrar= {mostrar}
+            insertarPedido= {insertarPedido}
             />
           </div>
         </div>

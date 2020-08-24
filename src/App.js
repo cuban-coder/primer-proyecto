@@ -8,18 +8,19 @@ import './App.css';
 
 
 //Componentes
-import {TaskRow} from './components/Nav';
+
 import Navigation from './components/Navigation'
 import Menu from './components/Menu'
 import Listado from './components/Listado'
-
+import Personal from './components/Personal'
 
 
 function App() {
   return (
     <Router>
-        <Navigation />
-            <Route path="/" exact component={Menu} />
+            <Route path="/" exact component={Navigation} />
+            <Route path="/" exact  component={Menu} />
+            <Route path="/personal"  component={Personal} />
     </Router>
   );
 }

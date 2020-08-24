@@ -1,5 +1,6 @@
 import React from "react";
 import "./Pedido.css";
+import Cantidad from './Cantidad'
 
 export const Card = (props) => (
   <div className="colPlato" key={props.plato.id}>
@@ -18,24 +19,20 @@ export const Card = (props) => (
 
         <div className="size-container">
           <h3 className="title">cantidad</h3>
-          <div className="sizes">
-            {props.cards.map((c) => (
-              <span
-                className={"size " + (props.plato.active === c ? "active" : "")}
-                key={c}
-                onClick={() => props.handleClick(props.plato.id, c)}
-              >
-                {c}
-              </span>
-            ))}
+          <Cantidad
+          cards= {props.cards}
+          plato= {props.plato}
+          handleClick={props.handleClick}
+          aumentarCantidad = {props.aumentarCantidad}
+          disminuirCantidad = {props.disminuirCantidad}
+          cardOne = {props.cardOne}
 
-            <span className="size">+</span>
-          </div>
+          />
 
           <div className="buy-price">
             <div className="price">
               <i className="fas fa-dollar-sign"></i>
-              <h2>${props.plato.precio}</h2>
+              <h2>${props.plato.precio} cuc</h2>
             </div>
             <button className="btn btn-danger" onClick={() => props.agregarPedido(props.plato)}>
               Agregar
