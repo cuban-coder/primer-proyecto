@@ -10,6 +10,13 @@ export default function Total(props) {
       >
         Hacer pedido
       </button>
+      <button
+        className="btn btn-success cerrar"
+        onClick={() => props.cerrarCuenta()}
+      >
+       Cerrar cuenta
+      </button>
     </div>
   );
 }
+

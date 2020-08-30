@@ -1,31 +1,67 @@
 import React, { useState, useEffect } from "react";
-
+import io from "socket.io-client";
 import "./Menu.css";
 
 import { Pedido } from "./Pedido";
 import Card from "./Card";
-import Total from './Total'
+import Total from "./Total";
 
 import axios from "axios";
 
 function Menu() {
+
   const [categoria, setCategoria] = useState([]);
   const [platos, setPlatos] = useState([]);
   const [cardSelected, setCardSelected] = useState("plato fuerte");
   const [agregados, setAgregados] = useState([]);
   const [hidden, setHidden] = useState(true);
   const [total, setTotal] = useState(0);
- 
+  const [response, setResponse] = useState(false);
+  const [socket, setSocket] = useState();
 
+  const [numeroActual, setnumeroActual] = useState();
+  const [numeroFijo, setNumeroFijo] = useState(0);
+
+  const [cuentaAbierta, setCuentaAbierta] = useState(true);
+  
   useEffect(() => {
     getCategoria();
     getPlatos();
+    getNumero();
   }, []);
-
+ 
   useEffect(() => {
-   getTotal();
+    getTotal();
   });
 
+ 
+
+
+  useEffect(() => {
+   if(socket){
+    socket.emit("message", agregados);
+   }
+   else{
+    setSocket(io("http://localhost:4000")) ;
+   } 
+  },[response]);
+
+ 
+ 
+  useEffect(() => {
+    if (socket){
+      socket.on('change', (variable)=> {
+        console.log("este es el numero",variable)
+        getNumero();
+      })
+
+    }
+      
+     else
+    {
+      setSocket(io('http://localhost:4000'));
+    }
+  });
 
   const getCategoria = async () => {
     const res = await axios.get("http://localhost:4000/categoria");
@@ -51,11 +87,9 @@ function Menu() {
     console.log("Aqui van los id", idCard, id);
   };
 
-     const agregarPedido = (plato) => {     
-     setAgregados ([ ...agregados, plato]);
+  const agregarPedido = (plato) => {
+    setAgregados([...agregados, plato]);
   };
-
-  
 
   const mostrarMas = () => {
     if (!hidden) {
@@ -74,73 +108,99 @@ function Menu() {
     setHidden(hidden ? false : true);
   };
 
-  const deletePedido =  (id, cantidad, precio) => {
-    const pedidos = agregados.filter(agregado => agregado.id!==id)
+  const deletePedido = (id, cantidad, precio) => {
+    const pedidos = agregados.filter((agregado) => agregado.id !== id);
     setAgregados(pedidos);
+  };
+
+  const cerrarCuenta =  () => {   
+    localStorage.setItem('cuentaAOC', true)
+    setCuentaAbierta(localStorage.getItem('cuentaAOC')); 
+    alert("Su cuenta se ha cerrado con éxito");
   }
 
-  const getTotal = async () => {
-    var pT= 0;
+  const getTotal =  () => {
+    var pT = 0;
     for (let i = 0; i < agregados.length; i++) {
-     pT = (agregados[i].precio * agregados[i].active)+pT;
+      pT = agregados[i].precio * agregados[i].active + pT;
     }
-    setTotal(parseFloat(pT).toFixed(2))
-  }
-   const Ped = () => {
-     if (agregados.length!==0)
-     return (
-      agregados.map((a, i) => (
+    setTotal(parseFloat(pT).toFixed(2));
+  };
+  const Ped = () => {
+    if (agregados.length !== 0)
+      return agregados.map((a, i) => (
         <Pedido
           nombre={a.nombre}
           cantidad={a.active}
           precio={a.precio}
-          showactive = {a.showactive}
+          showactive={a.showactive}
           id={a.id}
           key={i}
           indice={i}
           deletePedido={deletePedido}
         />
-      ))
-     )
-     else 
-     return (
-       null
-     )
-   }
+      ));
+    else return null;
+  };
 
-   const aumentarCantidad = async (idCard, id) => {
+  const aumentarCantidad = async (idCard, id) => {
     await setPlatos(
       platos.map((plato) =>
-        plato.id === idCard ? { ...plato, active: id+1 } : plato
-      )
-    );   
-   }
-   const disminuirCantidad = async (idCard, id) => {
-    await setPlatos(
-      platos.map((plato) =>
-        plato.id === idCard ? { ...plato, active: id-1 } : plato
+        plato.id === idCard ? { ...plato, active: id + 1 } : plato
       )
     );
-   }
+  };
+  const disminuirCantidad = async (idCard, id) => {
+    await setPlatos(
+      platos.map((plato) =>
+        plato.id === idCard ? { ...plato, active: id - 1 } : plato
+      )
+    );
+  };
 
-  
+  const getNumero = async () => {
+    const res = await axios.get("http://localhost:4000/numero");
+    let element = 0;
+    for (let i = 0; i < res.data.length; i++) {
+       element = res.data[i].actual;
+    }
+    setnumeroActual(element);
+    console.log(element)
+  };
 
   const insertarPedido = async () => {
-    await agregados.map(agregado => 
-       axios.post("http://localhost:4000/temp", {
-       id_plato: agregado.id,
-       cantidad: agregado.active,
-       nombre_cliente: "Margarita",
-       cancelado: false,
-       done: false
-      }
-    )
-      );
+    let data = localStorage.getItem('change');
+    if(data != null){
+      setNumeroFijo(data)
+    }
+    else{
+      localStorage.setItem('change', JSON.stringify(numeroActual));
+    }
+    await agregados.map((agregado) =>
+    axios.post("http://localhost:4000/temp", {
+      id_plato: agregado.id,
+      cantidad: agregado.active,
+      nombre_cliente: "Margarita",
+      cancelado: false,
+      done: false,
+      numero: numeroFijo
+    })
+  );
+    setResponse(response ? false : true);
     setAgregados([]);
-  }
 
+    if(cuentaAbierta){
+      
+      const actualizar = numeroActual+1;
+      await axios.post("http://localhost:4000/numero",{actual:actualizar});
+      localStorage.setItem('cuentaAOC', false)
+      setCuentaAbierta(localStorage.getItem('cuentaAOC'));
+      socket.emit('change',actualizar)
+      getNumero();
+    }
+  };
 
-  const cards = [1, 2, 3,4];
+  const cards = [1, 2, 3, 4];
   const cardOne = 5;
   return (
     <div>
@@ -164,14 +224,11 @@ function Menu() {
                   key={plato.id}
                   handleClick={handleClick}
                   cards={cards}
-                  cardOne = {cardOne}
+                  cardOne={cardOne}
                   agregarPedido={agregarPedido}
-                  aumentarCantidad= {aumentarCantidad}
-                  mostrarMas = {mostrarMas}
-                  
-                  disminuirCantidad = {disminuirCantidad}
-
-
+                  aumentarCantidad={aumentarCantidad}
+                  mostrarMas={mostrarMas}
+                  disminuirCantidad={disminuirCantidad}
                 />
               ))}
           </div>
@@ -184,8 +241,9 @@ function Menu() {
                 <tr>
                   <td>
                     <button className="btn btn-secondary" onClick={showPedido}>
-                      #
+                      -{numeroActual}--{numeroFijo}-
                     </button>
+                    
                   </td>
                   <td>nombre</td>
                   <td>cantidad</td>
@@ -194,17 +252,15 @@ function Menu() {
                 </tr>
               </thead>
               <tbody className="centrada">
-                <Ped/>
+                <Ped />
               </tbody>
             </table>
 
-            <Total 
-            total= {total}
-            insertarPedido= {insertarPedido}
-            />
+            <Total total={total} insertarPedido={insertarPedido} cerrarCuenta = {cerrarCuenta}/>
           </div>
         </div>
       </div>
+      
     </div>
   );
 }
