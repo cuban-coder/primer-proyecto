@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/primer-proyecto/static/css/main.2984f496.chunk.css",
+    "main.js": "/primer-proyecto/static/js/main.384264cf.chunk.js",
+    "main.js.map": "/primer-proyecto/static/js/main.384264cf.chunk.js.map",
+    "runtime~main.js": "/primer-proyecto/static/js/runtime~main.b7942bc8.js",
+    "runtime~main.js.map": "/primer-proyecto/static/js/runtime~main.b7942bc8.js.map",
+    "static/css/2.0624914a.chunk.css": "/primer-proyecto/static/css/2.0624914a.chunk.css",
+    "static/js/2.28548e42.chunk.js": "/primer-proyecto/static/js/2.28548e42.chunk.js",
+    "static/js/2.28548e42.chunk.js.map": "/primer-proyecto/static/js/2.28548e42.chunk.js.map",
+    "index.html": "/primer-proyecto/index.html",
+    "precache-manifest.9de0dda56f9ad11ef4cc31393d796473.js": "/primer-proyecto/precache-manifest.9de0dda56f9ad11ef4cc31393d796473.js",
+    "service-worker.js": "/primer-proyecto/service-worker.js",
+    "static/css/2.0624914a.chunk.css.map": "/primer-proyecto/static/css/2.0624914a.chunk.css.map",
+    "static/css/main.2984f496.chunk.css.map": "/primer-proyecto/static/css/main.2984f496.chunk.css.map",
+    "static/media/imagen7.jpg": "/primer-proyecto/static/media/imagen7.16ecd168.jpg",
+    "static/media/imagen9.jpg": "/primer-proyecto/static/media/imagen9.973e38da.jpg"
+  }
+}
