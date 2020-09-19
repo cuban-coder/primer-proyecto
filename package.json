@@ -2,6 +2,8 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://cuban-coder.github.io/primer-proyecto",
+  
   "dependencies": {
     "animate.css": "^4.1.0",
     "axios": "^0.19.0",
@@ -16,8 +18,10 @@
     "socket.io-client": "^2.3.0",
     "timeago.js": "^4.0.0-beta.2"
   },
-  "homepage": "./",
+  
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
