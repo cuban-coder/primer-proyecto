@@ -8,6 +8,7 @@ const Personal = () => {
   const [socket, setSocket] = useState();
   
   
+  
   useEffect(() => {
     insertPedidos();
     
@@ -17,9 +18,10 @@ const Personal = () => {
 
   useEffect(() => {
     if (socket)
-      socket.on('message', (agregados)=> {
+      socket.on('message', (agregados, numerito)=> {
         console.log("estos son los insertados",agregados)
         setInsertados([...insertados, ...agregados]);
+       
       })
      else
     {
@@ -59,7 +61,7 @@ const Personal = () => {
             <div className="col-md-12 ">
               <ul className="list-group">
                 <li className="list-group-item centrada">Mesa 1</li>
-  <li className="list-group-item centrada">Pedido # 2</li>
+  
 
                 <PedidoPersonal/>
 

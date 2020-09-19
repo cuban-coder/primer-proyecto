@@ -9,7 +9,6 @@ import Total from "./Total";
 import axios from "axios";
 
 function Menu() {
-
   const [categoria, setCategoria] = useState([]);
   const [platos, setPlatos] = useState([]);
   const [cardSelected, setCardSelected] = useState("plato fuerte");
@@ -23,43 +22,28 @@ function Menu() {
   const [numeroFijo, setNumeroFijo] = useState(0);
 
   const [cuentaAbierta, setCuentaAbierta] = useState(true);
-  
+
   useEffect(() => {
     getCategoria();
     getPlatos();
     getNumero();
   }, []);
- 
+
+  useEffect(() => {
+    if (socket) {
+      socket.emit("message", agregados);
+    }
+  }, [response]);
+
   useEffect(() => {
     getTotal();
-  });
-
- 
-
-
-  useEffect(() => {
-   if(socket){
-    socket.emit("message", agregados);
-   }
-   else{
-    setSocket(io("http://localhost:4000")) ;
-   } 
-  },[response]);
-
- 
- 
-  useEffect(() => {
-    if (socket){
-      socket.on('change', (variable)=> {
-        console.log("este es el numero",variable)
+    if (socket) {
+      socket.on("change", (variable) => {
+        console.log("este es el numero", variable);
         getNumero();
-      })
-
-    }
-      
-     else
-    {
-      setSocket(io('http://localhost:4000'));
+      });
+    } else {
+      setSocket(io("http://localhost:4000"));
     }
   });
 
@@ -85,6 +69,7 @@ function Menu() {
       )
     );
     console.log("Aqui van los id", idCard, id);
+    console.log("cuenta abierta", cuentaAbierta);
   };
 
   const agregarPedido = (plato) => {
@@ -113,13 +98,12 @@ function Menu() {
     setAgregados(pedidos);
   };
 
-  const cerrarCuenta =  () => {   
-    localStorage.setItem('cuentaAOC', true)
-    setCuentaAbierta(localStorage.getItem('cuentaAOC')); 
+  const cerrarCuenta = () => {
+    setCuentaAbierta(true);
     alert("Su cuenta se ha cerrado con éxito");
-  }
+  };
 
-  const getTotal =  () => {
+  const getTotal = () => {
     var pT = 0;
     for (let i = 0; i < agregados.length; i++) {
       pT = agregados[i].precio * agregados[i].active + pT;
@@ -162,42 +146,37 @@ function Menu() {
     const res = await axios.get("http://localhost:4000/numero");
     let element = 0;
     for (let i = 0; i < res.data.length; i++) {
-       element = res.data[i].actual;
+      element = res.data[i].actual;
     }
     setnumeroActual(element);
-    console.log(element)
+    console.log(element);
   };
 
   const insertarPedido = async () => {
-    let data = localStorage.getItem('change');
-    if(data != null){
-      setNumeroFijo(data)
-    }
-    else{
-      localStorage.setItem('change', JSON.stringify(numeroActual));
-    }
-    await agregados.map((agregado) =>
-    axios.post("http://localhost:4000/temp", {
-      id_plato: agregado.id,
-      cantidad: agregado.active,
-      nombre_cliente: "Margarita",
-      cancelado: false,
-      done: false,
-      numero: numeroFijo
-    })
-  );
+
+   await agregados.map((agregado) =>
+      axios.post("http://localhost:4000/temp", {
+        id_plato: agregado.id,
+        cantidad: agregado.active,
+        nombre_cliente: "Margarita",
+        cancelado: false,
+        done: false,
+        numero: cuentaAbierta===true ? numeroActual : numeroFijo,
+      })
+    );
     setResponse(response ? false : true);
     setAgregados([]);
-
-    if(cuentaAbierta){
-      
-      const actualizar = numeroActual+1;
-      await axios.post("http://localhost:4000/numero",{actual:actualizar});
-      localStorage.setItem('cuentaAOC', false)
-      setCuentaAbierta(localStorage.getItem('cuentaAOC'));
-      socket.emit('change',actualizar)
-      getNumero();
+    if(cuentaAbierta===true) {
+      const actualizar = numeroActual + 1;
+      await axios.post("http://localhost:4000/numero", { actual: actualizar });
+      localStorage.setItem("change", JSON.stringify(numeroActual));
+       setNumeroFijo(numeroActual);
+       setnumeroActual(actualizar);
+      socket.emit("change", actualizar);
+      localStorage.setItem("cuentaAOC", false);
+      setCuentaAbierta(localStorage.getItem("cuentaAOC"));
     }
+
   };
 
   const cards = [1, 2, 3, 4];
@@ -241,9 +220,8 @@ function Menu() {
                 <tr>
                   <td>
                     <button className="btn btn-secondary" onClick={showPedido}>
-                      -{numeroActual}--{numeroFijo}-
+                      -{numeroActual}--{numeroFijo}-{cuentaAbierta}
                     </button>
-                    
                   </td>
                   <td>nombre</td>
                   <td>cantidad</td>
@@ -256,11 +234,14 @@ function Menu() {
               </tbody>
             </table>
 
-            <Total total={total} insertarPedido={insertarPedido} cerrarCuenta = {cerrarCuenta}/>
+            <Total
+              total={total}
+              insertarPedido={insertarPedido}
+              cerrarCuenta={cerrarCuenta}
+            />
           </div>
         </div>
       </div>
-      
     </div>
   );
 }
